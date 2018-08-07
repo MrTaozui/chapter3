@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)//保留的时期
 public @interface Action {
     /**
-     * 请求类型与路径
+     * 请求类型与路径     method:/mapping_path
      */
     String value();
 }

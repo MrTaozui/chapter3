@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ClassUtil {
 	private static final Logger LOGGER=LoggerFactory.getLogger(CastUtil.class);
-	
+
 	/**
 	 * 获取类加载器
 	 */

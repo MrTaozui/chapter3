@@ -4,7 +4,7 @@ package org.smart4j.framework.util;
  * @author tjj .
  * 转型操作工具类
  */
-public class CastUtil {
+public final class CastUtil {
     /**
      * 转为String 型
      */

@@ -31,7 +31,7 @@ public final class ReflectionUtil {
     /**
      * 调用方法
      */
-    public static Object invokeMethod(Object obj, Method method,Object...args){
+    public static Object invokeMethod(Object obj, Method method,Object...args){//args 传入的 是Param 对象 
         Object result;
         method.setAccessible(true);//要获访问私有的变量方法名private,故必须进行此操作
         try {

@@ -65,7 +65,7 @@ public final class ControllerHelper {
 /**
  * 获取Handler
  */
-	public static Handler getHandler(String requestMethod,String requestPath){
+	public static Handler getHandler(String requestMethod,String requestPath){//get   post delect put...
 		Request request=new Request(requestMethod, requestPath);//重写了 hashCode() 和equals()
 		return ACTION_MAP.get(request);
 	}

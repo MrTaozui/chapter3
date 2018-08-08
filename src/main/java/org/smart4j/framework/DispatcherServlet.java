@@ -42,7 +42,7 @@ import org.smart4j.framework.util.StringUtil;
 //拦截/* 所有请求
 public class DispatcherServlet extends HttpServlet{
 	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
+	public void init(ServletConfig servletConfig) throws ServletException {//项目启动的时候运行
 		//初始化相关Helper类
 		HelperLoder.init();
 		//获取ServletContext对象  (用于注册Servlet)  因为拦截了 所有的请求 所以把原生的给注入进去 成自己的路径下的
@@ -54,6 +54,7 @@ public class DispatcherServlet extends HttpServlet{
 		ServletRegistration defaultServlet=servletContext.getServletRegistration("default");
 		defaultServlet.addMapping(ConfigHelper.getAppAssertPath()+"*");
 	}
+	// 要访问servlet的时候 执行
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//获取请求方法与请求路径
@@ -108,19 +109,19 @@ public class DispatcherServlet extends HttpServlet{
 						request.getRequestDispatcher(ConfigHelper.getAppJspPath()+path).forward(request, response);
 						//转发到  jsp路径下
 					}
-				}else if(result instanceof Data){
-					//返回JSON数据
-					Data data=(Data)result;
-					Object model=data.getModel();
-					if(model!=null){
-						response.setContentType("applaction/json");
-						response.setCharacterEncoding("UTF-8");
-						PrintWriter writer=response.getWriter();
-						String json=JsonUtil.toJson(model);
-						writer.write(json);
-						writer.flush();
-						writer.close();
-					}
+				}
+			}else if(result instanceof Data){
+				//返回JSON数据
+				Data data=(Data)result;
+				Object model=data.getModel();
+				if(model!=null){
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					PrintWriter writer=response.getWriter();
+					String json=JsonUtil.toJson(model);
+					writer.write(json);
+					writer.flush();
+					writer.close();
 				}
 			}
 		}

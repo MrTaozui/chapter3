@@ -9,10 +9,10 @@ import org.smart4j.framework.bean.Param;
 @Controller
 public class ControllerTest {
 	@Inject
-	ServiceTest serviceDemo;
+	public ServiceTest serviceDemo;
 	@Action("get:/la")
 	public Data fun(Param param){
-		//serviceDemo.print();
+		serviceDemo.print();
 		return new Data("lalallala");
 	}
 

@@ -4,6 +4,7 @@ import org.smart4j.framework.helper.BeanHelper;
 import org.smart4j.framework.helper.ClassHelper;
 import org.smart4j.framework.helper.ControllerHelper;
 import org.smart4j.framework.helper.IocHelper;
+import org.smart4j.framework.util.ClassUtil;
 
 /**
  * 加载相应的Helper类
@@ -19,6 +20,9 @@ public final class HelperLoder {
 				ControllerHelper.class//为带有controller注解的类，为其带有Action注解的方法生成 根据注解值
 									//初始化成<Request,Handler>
 		};
+		for (Class<?> cls:classList){
+			ClassUtil.loadClass(cls.getName(),true);
+		}
 	}
 
 }

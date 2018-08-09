@@ -35,7 +35,8 @@ public class ClassUtil {
 		return Thread.currentThread().getContextClassLoader();
 	}
 	/**
-	 * 加载类
+	 * 加载类  为了提高加载性能 可以将isInitialized 设置为false
+	 * initialize:如果为true，则会在返回Class对象之前，对该类型做连接，校验，初始化操作。(如：执行static块中的代码)
 	 */
 	public static Class<?> loadClass(String className,boolean isInitialized){
 		Class<?> cls;

@@ -21,7 +21,11 @@ import net.sf.cglib.proxy.MethodProxy;
  */
 public class CGLibProxy  implements MethodInterceptor{
 	
-
+	private static CGLibProxy instance=new CGLibProxy();
+	private CGLibProxy(){}
+	public static CGLibProxy getInstance(){
+		return instance;
+	}
 	public <T> T getProxy(Class<T> cls){
 		return (T) Enhancer.create(cls, this);
 	}
@@ -39,8 +43,8 @@ public class CGLibProxy  implements MethodInterceptor{
 		System.out.println("after");
 	}
 	public static void main(String[] args) {
-		CGLibProxy cgLibProxy=new CGLibProxy();
-		Hello helloProxy=cgLibProxy.getProxy(HelloImpl.class);
+		
+		Hello helloProxy=CGLibProxy.getInstance().getProxy(HelloImpl.class);
 		helloProxy.say("jack");
 	}
 

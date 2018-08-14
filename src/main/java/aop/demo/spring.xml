@@ -10,6 +10,11 @@
  
 	<context:component-scan base-package="aop.demo"/>
 	
+	<!-- 配置一个切面 -->
+	<bean id="greetingAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+	<property name="advice" ref="greetingAroundAdvice"/><!-- 增强 -->
+	<property name="pattern" value="aop.demo.GreetingImpl.good.*"/><!-- 切点 是要拦截的表达式 -->
+	</bean>
 	
 	<bean id="greetingProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
 	<!-- 需要动态实现的接口 -->

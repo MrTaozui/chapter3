@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 
 /**
- * 切面代理
+ * 切面代理    设置切面类的逻辑切面增强逻辑 
  * 需要在目标方法被调用的前后增减相应的逻辑
  * 抽象类 提供模板方法，提供模板方法
  * @author tjj .
@@ -16,17 +16,27 @@ public abstract class AspectProxy implements Proxy{
 
     @Override
     public Object doProxy(ProxyChain proxyChain) throws Throwable {
-        Object resul=null;
+        Object result=null;
         Class<?> cls=proxyChain.getTargetClass();
         Method method=proxyChain.getTargetMethod();
         Object[] params=proxyChain.getMethodParams();
         begin();
-        if(intercept(cls,method,params)){
-            before(cls,method);
+        try{
+        if(intercept(cls,method,params)){//是拦截的类  增强逻辑
+            before(cls,method,params);
+            result=proxyChain.doProxyChain();
+            after(cls, method, params);
+        }else{
+        	result=proxyChain.doProxyChain();
         }
-
-
-        return null;
+        }catch (Exception e) {
+			LOGGER.error("proxy failure",e);
+			error(cls, method, params, e);
+			throw e;
+		}finally{
+			end();
+		}
+        return result;
     }
     public void  begin(){}
 
@@ -39,7 +49,7 @@ public abstract class AspectProxy implements Proxy{
     public void after(Class<?> cls,Method method,Object[] parsms) throws Throwable{
 
     }
-    public void error(Class<?> cls,Method method,Object[] parsms,Throwable e){
+    public void error(Class<?> cls,Method method,Object[] params,Throwable e){
 
     }
     public void end(){}

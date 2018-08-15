@@ -27,7 +27,7 @@ public class CGLibProxy  implements MethodInterceptor{
 		return instance;
 	}
 	public <T> T getProxy(Class<T> cls){
-		return (T) Enhancer.create(cls, this);
+		return (T) Enhancer.create(cls, this);//返回代理 但是需要的参数是被代理类的类类型  和增强的参数 通过修改字节码文件
 	}
 	@Override
 	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {

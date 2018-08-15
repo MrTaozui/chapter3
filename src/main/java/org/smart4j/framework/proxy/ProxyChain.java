@@ -20,7 +20,8 @@ public class ProxyChain {
 	private  Class<?> targetClass;//目标类
 	private  Object targetObject;//目标对象
 	private  Method targetMethod;//目标方法
-	private  MethodProxy methodProxy;//方法代理  拦截方法 对方法做增强处理
+	private MethodProxy methodProxy;//方法代理  拦截方法 对方法做增强处理
+
 	private  Object[] methodParams;//方法参数
 	
 	private List<Proxy> proxyList=new ArrayList<Proxy>();//代理列表
@@ -46,12 +47,12 @@ public class ProxyChain {
 	public Object[] getMethodParams() {
 		return methodParams;
 	}
-	public Object doProxyChain()throws Throwable{
+	public Object doProxyChain()throws Throwable{//
 		Object methodResult;
 		if(proxyIndex<proxyList.size()){
-			methodResult=proxyList.get(proxyIndex++).doProxy(this);
+			methodResult=proxyList.get(proxyIndex++).doProxy(this);//执行代理链子
 		}else{
-			methodResult=methodProxy.invokeSuper(targetObject, methodParams);
+			methodResult=methodProxy.invokeSuper(targetObject, methodParams);//执行代理方法
 		}
 		return methodResult;
 	}

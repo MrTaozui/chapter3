@@ -21,6 +21,8 @@
 	<property name="interfaces" value="aop.demo.Apology"></property>
 	<!-- 目标类 -->
 	<property name="target" ref="greetingImpl"/>
+	
+	
 	<!-- 引入增强lei -->
 	<property name="interceptorNames" value="greetingIntroAdvice"/>
 	<!-- 代理目标类  默认为false，代理接口 使用jdk动态代理  true使用CGLib代理 -->

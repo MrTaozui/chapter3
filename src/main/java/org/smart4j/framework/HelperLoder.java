@@ -1,9 +1,6 @@
 package org.smart4j.framework;
 
-import org.smart4j.framework.helper.BeanHelper;
-import org.smart4j.framework.helper.ClassHelper;
-import org.smart4j.framework.helper.ControllerHelper;
-import org.smart4j.framework.helper.IocHelper;
+import org.smart4j.framework.helper.*;
 import org.smart4j.framework.util.ClassUtil;
 
 /**
@@ -16,6 +13,7 @@ public final class HelperLoder {
 		Class<?>[] classList={
 				ClassHelper.class, //加载所有的class    controller,service
 				BeanHelper.class,  //为加载的class 生成对象生成Bean容器Map<Class<?>,Object>
+				AopHelper.class,//加载设置 代理对象 会覆盖上一步BeanHelper.class生成的对象 要在IocHelper之前
 				IocHelper.class, //为 使用Inject注解的 类，忘Bean容器的对象 字段里注入对象实例 主要是serivice
 				ControllerHelper.class//为带有controller注解的类，为其带有Action注解的方法生成 根据注解值
 									//初始化成<Request,Handler>

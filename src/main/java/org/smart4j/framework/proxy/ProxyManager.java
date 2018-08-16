@@ -18,6 +18,7 @@ public class ProxyManager {
 	/**
 	 * 返回代理对象
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T createProxy(final Class<?> targetClass,final List<Proxy> proxyList){
 		
 		return (T) Enhancer.create(targetClass, new MethodInterceptor() {//方法的增强处理

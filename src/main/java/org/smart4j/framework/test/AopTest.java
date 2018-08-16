@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 /**
  * @author tjj .
  */
-@Aspect(Service.class)
+@Aspect(Controller.class)
 public class AopTest extends AspectProxy{
     @Override
     public void before(Class<?> cls, Method method, Object[] parsms) throws Throwable {

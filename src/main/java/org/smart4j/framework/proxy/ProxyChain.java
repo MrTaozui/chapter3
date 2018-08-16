@@ -33,6 +33,7 @@ public class ProxyChain {
 		this.targetObject=targetObject;
 		this.targetMethod=targetMethod;
 		this.methodProxy=methodProxy;
+		this.methodParams=methodParams;
 		this.proxyList=proxyList;
 	}
 
@@ -50,9 +51,10 @@ public class ProxyChain {
 	public Object doProxyChain()throws Throwable{//
 		Object methodResult;
 		if(proxyIndex<proxyList.size()){
-			methodResult=proxyList.get(proxyIndex++).doProxy(this);//执行代理链子
+			methodResult=proxyList.get(proxyIndex++).doProxy(this);//执行代理链子  
+			//各个代理对象执行代理增强方法   只有 before 和aftre
 		}else{
-			methodResult=methodProxy.invokeSuper(targetObject, methodParams);//执行代理方法
+			methodResult=methodProxy.invokeSuper(targetObject, methodParams);//执行元方法
 		}
 		return methodResult;
 	}

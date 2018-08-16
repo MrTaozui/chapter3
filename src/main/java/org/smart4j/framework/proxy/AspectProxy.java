@@ -15,7 +15,7 @@ public abstract class AspectProxy implements Proxy{
     private static final Logger LOGGER= LoggerFactory.getLogger(AspectProxy.class);
 
     @Override
-    public Object doProxy(ProxyChain proxyChain) throws Throwable {
+    public Object doProxy(ProxyChain proxyChain) throws Throwable {//执行代理
         Object result=null;
         Class<?> cls=proxyChain.getTargetClass();
         Method method=proxyChain.getTargetMethod();

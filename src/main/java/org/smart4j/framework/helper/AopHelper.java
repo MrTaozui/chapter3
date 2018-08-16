@@ -31,8 +31,8 @@ public final class AopHelper {
 		//获取 包名下所有父类为AspectProxy的class
 		Set<Class<?>> proxyClassSet=ClassHelper.getClassSetBySuper(AspectProxy.class);
 		for (Class<?> proxyClass :proxyClassSet) {
-			if(proxyClass.isAnnotationPresent(Aspect.class)){
-				Aspect aspect=proxyClass.getAnnotation(Aspect.class);//获得 Aspect注解类
+			if(proxyClass.isAnnotationPresent(Aspect.class)){//如果带有注解Aspect注解的
+				Aspect aspect=proxyClass.getAnnotation(Aspect.class);//获得 Aspect注解类 的值 也就是切点
 				Set<Class<?>> targetClassSet=createTargetClassSet(aspect);
 				proxyMap.put(proxyClass,targetClassSet);
 			}
@@ -48,22 +48,22 @@ public final class AopHelper {
 	 * 如下
 	 */
 	private static Map<Class<?>,List<Proxy>> createTargetMap(Map<Class<?>,Set<Class<?>>> proxyMap) throws  Exception{
-		Map<Class<?>,List<Proxy>> targerMap=new HashMap<Class<?>, List<Proxy>>();//代理类 目标类对象集合
+		Map<Class<?>,List<Proxy>> targetMap=new HashMap<Class<?>, List<Proxy>>();//代理类 目标类对象集合
 		for (Map.Entry<Class<?>,Set<Class<?>>> proxyEntry:proxyMap.entrySet()) {
-			Class<?> proxyClass=proxyEntry.getKey();
-			Set<Class<?>> targetClassSet=proxyEntry.getValue();
+			Class<?> proxyClass=proxyEntry.getKey();//代理类
+			Set<Class<?>> targetClassSet=proxyEntry.getValue();//通过代理类设置的拦截的切点 获得的被代理的class set
 			for (Class<?> targetClass:targetClassSet) {
-				Proxy proxy=(Proxy)proxyClass.newInstance();
-				if(targerMap.containsKey(targetClass)){//是不是已经添加过了 targetClass 持续添加proxy
-					targerMap.get(targetClass).add(proxy);
+				Proxy proxy=(Proxy)proxyClass.newInstance();//创建代理类
+				if(targetMap.containsKey(targetClass)){//是不是已经添加过了 targetClass 持续添加proxy
+					targetMap.get(targetClass).add(proxy);
 				}else {
-					List<Proxy> proxyList=new ArrayList<Proxy>();
+					List<Proxy> proxyList=new ArrayList<Proxy>();//这个list
 					proxyList.add(proxy);
-					targerMap.put(targetClass,proxyList);
+					targetMap.put(targetClass,proxyList);
 				}
 			}
 		}
-		return targerMap;// <代理类,被代理的目标类List>
+		return targetMap;// <被代理的类, 代理集合list<代理对象>> 一个类可能会被多个代理
 	}
 
 	/**
@@ -76,8 +76,8 @@ public final class AopHelper {
 			for (Map.Entry<Class<?>,List<Proxy>> targetEntry : targetMap.entrySet()) {
 				Class<?>  targetClass=targetEntry.getKey();
 				List<Proxy> proxyList=targetEntry.getValue();
-				Object proxy= ProxyManager.createProxy(targetClass,proxyList);
-				BeanHelper.setBean(targetClass,proxy);// 代理对象重新放入BeanMap中  前面已经加载过这次被覆盖
+				Object proxy= ProxyManager.createProxy(targetClass,proxyList);// 返回代理对象 代理对象里面有方法拦截和方法增强
+				BeanHelper.setBean(targetClass,proxy);// 代理对象重新放入BeanMap中  前面已经加载过BEAN_MAP这里被覆盖
 			}
 		}catch (Exception e){
 			LOGGER.error("aop failure",e);

@@ -23,9 +23,9 @@ public abstract class AspectProxy implements Proxy{
         begin();
         try{
         if(intercept(cls,method,params)){//是拦截的类  增强逻辑
-            before(cls,method,params);
+            before(cls,method,params);//执行前置增强
             result=proxyChain.doProxyChain();
-            after(cls, method, params);
+            after(cls, method, params);//执行后置增强
         }else{
         	result=proxyChain.doProxyChain();
         }
@@ -40,7 +40,7 @@ public abstract class AspectProxy implements Proxy{
     }
     public void  begin(){}
 
-    public boolean intercept(Class<?> cls,Method method,Object[] params) throws Throwable{
+    public boolean intercept(Class<?> cls,Method method,Object[] params) throws Throwable{//可以写 拦截的逻辑等
         return true;
     }
     public void before(Class<?> cls,Method method,Object[] parsms) throws Throwable{

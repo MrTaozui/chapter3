@@ -25,7 +25,7 @@ public class ProxyManager {
 			//targetObject  是targetClass 类创建出来的
 			@Override
 			public Object intercept(Object targetObject, Method targetMethod, Object[] methodParams, MethodProxy methodProxy) throws Throwable {
-
+				//根据上面的这些拦截信息 和代理类的列表 组成一个代理链对象  然后执行这个代理链的doProxyChain方法
 				return new ProxyChain(targetClass, targetObject, targetMethod, methodProxy, methodParams, proxyList).doProxyChain();
 			}
 		});

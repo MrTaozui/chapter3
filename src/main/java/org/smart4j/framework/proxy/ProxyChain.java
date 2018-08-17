@@ -25,7 +25,7 @@ public class ProxyChain {
 	private  Object[] methodParams;//方法参数
 	
 	private List<Proxy> proxyList=new ArrayList<Proxy>();//代理列表
-	private int proxyIndex=0;//代理索引  代理对象计数器
+	private int proxyIndex=0;//代理索引  代理对象计数器  执行当前的list中的proxy位置
 	
 	public ProxyChain(Class<?> targetClass,Object targetObject,Method targetMethod,MethodProxy methodProxy,
 			Object[] methodParams,List<Proxy> proxyList){
@@ -50,8 +50,8 @@ public class ProxyChain {
 	}
 	public Object doProxyChain()throws Throwable{//
 		Object methodResult;
-		if(proxyIndex<proxyList.size()){
-			methodResult=proxyList.get(proxyIndex++).doProxy(this);//执行代理链子  
+		if(proxyIndex<proxyList.size()){//挨个 取出List中的代理对象 然后执行代理方法doProxy
+			methodResult = proxyList.get(proxyIndex++).doProxy(this);//执行代理链子   由于是列表哈偶哦个，执行代理对象的把代理chain对象带着 这样不会传丢
 			//各个代理对象执行代理增强方法   只有 before 和aftre
 		}else{
 			methodResult=methodProxy.invokeSuper(targetObject, methodParams);//执行元方法

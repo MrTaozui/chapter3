@@ -6,9 +6,11 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framework.annotation.Aspect;
+import org.smart4j.framework.annotation.Service;
 import org.smart4j.framework.proxy.AspectProxy;
 import org.smart4j.framework.proxy.Proxy;
 import org.smart4j.framework.proxy.ProxyManager;
+import org.smart4j.framework.proxy.TransactionProxy;
 
 public final class AopHelper {
 	private static final Logger LOGGER= LoggerFactory.getLogger(AopHelper.class);
@@ -28,7 +30,7 @@ public final class AopHelper {
 	 */
 	private static Map<Class<?>,Set<Class<?>>> createProxyMap()throws Exception{
 		Map<Class<?>,Set<Class<?>>> proxyMap=new HashMap<Class<?>, Set<Class<?>>>();
-		//获取 包名下所有父类为AspectProxy的class
+		/*//获取 包名下所有父类为AspectProxy的class
 		Set<Class<?>> proxyClassSet=ClassHelper.getClassSetBySuper(AspectProxy.class);
 		for (Class<?> proxyClass :proxyClassSet) {
 			if(proxyClass.isAnnotationPresent(Aspect.class)){//如果带有注解Aspect注解的
@@ -36,7 +38,9 @@ public final class AopHelper {
 				Set<Class<?>> targetClassSet=createTargetClassSet(aspect);
 				proxyMap.put(proxyClass,targetClassSet);
 			}
-		}
+		}*/
+		addAspectProxy(proxyMap);
+		addTransactionProxy(proxyMap);//添加数据库事务代理
 		return proxyMap;//返回<代理类 , 和被代理的目标类的set>
 	}
 	/**
@@ -64,6 +68,23 @@ public final class AopHelper {
 			}
 		}
 		return targetMap;// <被代理的类, 代理集合list<代理对象>> 一个类可能会被多个代理
+	}
+	
+	private static void addAspectProxy(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception{
+		Set<Class<?>> proxyClassSet=ClassHelper.getClassSetBySuper(AspectProxy.class);
+		for (Class<?> proxyClass : proxyClassSet) {
+			if(proxyClass.isAnnotationPresent(Aspect.class)){
+				Aspect aspect=proxyClass.getAnnotation(Aspect.class);
+				Set<Class<?>> targetClassSet=createTargetClassSet(aspect);
+				proxyMap.put(proxyClass, targetClassSet);
+				
+			}
+		}
+	}
+	
+	private static void addTransactionProxy(Map<Class<?>,Set<Class<?>>> proxyMap){
+		Set<Class<?>> serviceClassSet=ClassHelper.getClassSetByAnnotation(Service.class);
+		proxyMap.put(TransactionProxy.class, serviceClassSet);// 代理类 被代理类
 	}
 
 	/**

@@ -13,10 +13,10 @@ public final class ConfigHelper {
     private static final Properties CONFIG_PROPS= PropsUtil.loadProps(ConfigConstant.CONFIG_FILE);
 
     /**
-     * 获取JDBC驱动
+     * 获取url
      */
     public static String getJdbcUrl(){
-        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_DRIVER);
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_URL);
     }
     /**
      * 获取JDBC用户名
@@ -47,6 +47,14 @@ public final class ConfigHelper {
      */
     public static String getAppAssertPath(){
         return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_ASSET_PATH,"/asset/");
+
+    }
+    /**
+     * 获取驱动
+     * @return
+     */
+    public static String getJDBCDriver(){
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_DRIVER);
 
     }
 }

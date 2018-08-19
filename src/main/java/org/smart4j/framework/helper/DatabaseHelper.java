@@ -43,11 +43,11 @@ public final class DatabaseHelper {
     static{
     	CONNECTION_THREAD=new ThreadLocal<Connection>();
     	QUERY_RUNNER=new QueryRunner();   	
-        Properties conf= PropsUtil.loadProps("config.properties");
-        String driver=conf.getProperty("jdbc.driver");
-        String  url=conf.getProperty("jdbc.url");
-        String username=conf.getProperty("jdbc.username");
-        String password=conf.getProperty("jdbc.password");
+       // Properties conf= PropsUtil.loadProps("config.properties");
+        String driver=ConfigHelper.getJDBCDriver();
+        String  url=ConfigHelper.getJdbcUrl();
+        String username=ConfigHelper.getJdbcUsername();
+        String password=ConfigHelper.getJdbcPassword();
         DATA_SOURCE=new BasicDataSource();
         DATA_SOURCE.setDriverClassName(driver);
         DATA_SOURCE.setUrl(url);

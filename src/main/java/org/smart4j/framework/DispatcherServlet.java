@@ -68,7 +68,7 @@ public class DispatcherServlet extends HttpServlet{
 			Object controllerBean=BeanHelper.getBean(controllerClass);
 			//创建请求参数对象
 			Map<String, Object> paramMap=new HashMap<String, Object>();
-			Enumeration<String>paramNames=request.getHeaderNames();//获取参数 name
+			Enumeration<String>paramNames=request.getParameterNames();//获取参数 name
 			while(paramNames.hasMoreElements()){
 				String paramName=paramNames.nextElement();
 				String paramValue=request.getParameter(paramName);
@@ -76,7 +76,7 @@ public class DispatcherServlet extends HttpServlet{
 			}
 			String body=CodeUtil.decodeURL(StreamUtil.getString(request.getInputStream()));
 			if(StringUtil.isNotEmpty(body)){
-				String params[] =StringUtil.splitString(body, "$");
+				String params[] =StringUtil.splitString(body, "&");
 				if(ArrayUtil.isNotEmpty(params)){
 					for (String param : params) {
 						String[] array=StringUtil.splitString(param, "=");
@@ -90,9 +90,14 @@ public class DispatcherServlet extends HttpServlet{
 				
 			}
 			Param param=new Param(paramMap);
+			Object result;
 			//调用 Action方法
 			Method actionMethod=handler.getActionMethod();//获取 Controller 中的 Action注解方法
-			Object result=ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);//传入的 是Param 对象
+			if(param.isEmpty()){
+				result=ReflectionUtil.invokeMethod(controllerBean, actionMethod);
+			}else{
+			result=ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);//传入的 是Param 对象
+			}
 			//处理Action方法返回值
 			if(result instanceof View){
 				//返回jsp页面

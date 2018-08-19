@@ -10,8 +10,14 @@ public class ServiceTest {
 	private static final Logger LOGGER=LoggerFactory.getLogger(ServiceTest.class);
 	@Transaction
 	public void print(){
-		LOGGER.info("日志信息正常打印出来");
+		//LOGGER.info("日志信息正常打印出来");
 		System.out.println("Hello world!");
+	}
+	
+	@Transaction
+	public void print2(){
+		//LOGGER.info("日志信息正常打印出来2");
+		System.out.println("Hello world2!");
 	}
 
 }

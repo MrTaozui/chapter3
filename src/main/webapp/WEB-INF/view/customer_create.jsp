@@ -39,7 +39,7 @@
 <button type="submit">保存</button>
 </form>
 <script src="${BASE}/js/jquery-3.3.1.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="${BASE}/js/jquery.form.js"></script>
 <script>
 	$.ajax({
 		$('#customer_form').ajaxForm({

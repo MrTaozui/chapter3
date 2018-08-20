@@ -17,6 +17,10 @@ public final class StringUtil {
         return StringUtils.isEmpty(str);
     }
     /**
+     * 字符串分隔符
+     */
+    public static final String SEPARATOR=String.valueOf((char)29);
+    /**
      * 判断字符串是否非空
      */
     public static boolean isNotEmpty(String str){

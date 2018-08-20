@@ -3,6 +3,7 @@ package org.smart4j.framework.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framework.annotation.Service;
+import org.smart4j.framework.bean.FileParam;
 import org.smart4j.framework.helper.DatabaseHelper;
 
 import java.sql.*;
@@ -52,5 +53,15 @@ public class CustomerService {
      */
     public boolean deleteCustomer(long id){
         return  DatabaseHelper.deleteEntity(Customer.class, id);
+    }
+    /**
+     * 创建用户
+     */
+    public boolean createCuntomer(Map<String,Object> filedMap, FileParam fileParam){
+        boolean result=DatabaseHelper.insertEntity(Customer.class,filedMap);
+        if(result){
+
+        }
+        return result;
     }
 }

@@ -10,11 +10,20 @@ import org.smart4j.framework.bean.FileParam;
 import org.smart4j.framework.bean.FormParam;
 import org.smart4j.framework.bean.Param;
 import org.smart4j.framework.util.CollectionUtil;
+import org.smart4j.framework.util.FileUtil;
+import org.smart4j.framework.util.StringUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +80,14 @@ public final class UploadHelper {
                         if(fileItem.isFormField()){// isFormField方法用于判断FileItem类对象封装的数据是一个普通文本表单字段
                             String filedValue=fileItem.getString("UTF-8");
                             formParamList.add(new FormParam(filedName,filedValue));
+                        }else{
+                        	String fileName=FileUtil.getRealFileName(new String(fileItem.getName().getBytes(),"UTF-8"));
+                        	if(StringUtil.isNotEmpty(filedName)){
+                        		long fileSize=fileItem.getSize();
+                        		String contentType=fileItem.getContentType();
+                        		InputStream inputStream=fileItem.getInputStream();
+                        		fileParamList.add(new FileParam(filedName, fileName, fileSize, contentType, inputStream));
+                        	}
                         }
                         }
                     }
@@ -82,5 +99,40 @@ public final class UploadHelper {
            LOGGER.error("create param failure",e);
            throw new RuntimeException(e);
         }
+        return new Param(formParamList,fileParamList);
     }
+    /**
+     * 上传文件
+     */
+    
+    public static void uploadFile(String basePath,FileParam fileParam){
+    	try {
+    	if(fileParam!=null){
+    		String filePath=basePath+fileParam.getFileName();
+    		FileUtil.createFile(filePath);
+    		InputStream inputStream=new BufferedInputStream(fileParam.getInputStream());
+    		
+				OutputStream outputStream=new BufferedOutputStream(new FileOutputStream(filePath));
+			
+    	}
+    	} catch (FileNotFoundException e) {
+			LOGGER.error("upload file failure",e);
+			throw new RuntimeException(e);
+		}
+    }
+    /**
+     * 批量上传文件
+     */
+    public static void uploadFile(String basePath,List<FileParam> fileParamList) {
+    	try{
+		if(CollectionUtil.isNotEmpty(fileParamList)){
+			for (FileParam fileParam : fileParamList) {
+				uploadFile(basePath, fileParam);
+			}
+		}
+    	}catch (Exception e) {
+			LOGGER.error("upload file failure",e);
+			throw new RuntimeException(e);
+		}
+	}
 }

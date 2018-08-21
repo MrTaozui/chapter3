@@ -1,5 +1,6 @@
 package org.smart4j.framework.test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
@@ -18,14 +19,13 @@ public class ControllerTest {
 	CustomerService customerService;
 	@Action("get:/la")
 	public Data fun(Param p){
-		System.out.println(p.getString("name"));
+		try {
+			System.out.println(new String(p.getString("name").getBytes(),"ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return new Data("lalallala");
 	}
-	@Action("get:/getCustomer")
-	public View getCunsomerList(){
-		List<Customer>   customerList=	customerService.getCustomerList("");
-		
-		return new View("customer.jsp").addModel("customerList", customerList);
-	}
+
 
 }

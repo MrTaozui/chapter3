@@ -44,7 +44,7 @@
 	$.ajax({
 		$('#customer_form').ajaxForm({
 			type:'post',
-			url:'${BASE}/customer',
+			url:'${BASE}/customer_create',
 			success: function(data){
 				if(data){
 					location.herf='${BASE}/customer'

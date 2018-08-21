@@ -11,6 +11,7 @@ import org.smart4j.framework.bean.FormParam;
 import org.smart4j.framework.bean.Param;
 import org.smart4j.framework.util.CollectionUtil;
 import org.smart4j.framework.util.FileUtil;
+import org.smart4j.framework.util.StreamUtil;
 import org.smart4j.framework.util.StringUtil;
 
 import javax.servlet.ServletContext;
@@ -112,8 +113,8 @@ public final class UploadHelper {
     		FileUtil.createFile(filePath);
     		InputStream inputStream=new BufferedInputStream(fileParam.getInputStream());
     		
-				OutputStream outputStream=new BufferedOutputStream(new FileOutputStream(filePath));
-			
+            OutputStream outputStream=new BufferedOutputStream(new FileOutputStream(filePath));
+            StreamUtil.copyStream(inputStream,outputStream);
     	}
     	} catch (FileNotFoundException e) {
 			LOGGER.error("upload file failure",e);

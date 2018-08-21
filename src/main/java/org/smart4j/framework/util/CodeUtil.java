@@ -33,7 +33,7 @@ public final class CodeUtil {
 	public static String decodeURL(String source){
 		String target;
 		try {
-			target=URLDecoder.decode("source", "UTF-8");
+			target=URLDecoder.decode(source, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("decode url failure",e);
 			throw new RuntimeException(e);

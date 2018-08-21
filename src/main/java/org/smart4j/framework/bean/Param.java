@@ -15,14 +15,17 @@ import org.smart4j.framework.util.CollectionUtil;
 import org.smart4j.framework.util.StringUtil;
 
 public class Param {
-	private Map<String,Object> paramMap;
+//	private Map<String,Object> paramMap;
 
 	private List<FormParam> formParamList;//form表单属性等
 
 	private List<FileParam> fileParamList;//文件
 	
-	public Param(Map<String,Object> paramMap){
+	/*public Param(Map<String,Object> paramMap){
 		this.paramMap=paramMap;
+	}*/
+	public Param(List<FormParam> formParamList){
+		this.formParamList=formParamList;
 	}
 	public Param(List<FormParam> formParamList,List<FileParam> fileParamList){
 		this.formParamList=formParamList;
@@ -62,14 +65,14 @@ public class Param {
 	/**
 	 * 获取所有字段信息
 	 */
-	public Map<String,Object>getMap(){
+	/*public Map<String,Object>getMap(){
 		return paramMap;
-	}
+	}*/
 	/**
 	 * 验证参数是否为空
 	 */
 	public boolean isEmpty(){	
-		return CollectionUtil.isEmpty(paramMap)
+		return CollectionUtil.isEmpty(formParamList)
 				&&CollectionUtil.isEmpty(fileParamList);
 	}
 

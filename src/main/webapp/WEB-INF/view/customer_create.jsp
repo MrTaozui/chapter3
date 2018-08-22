@@ -7,13 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="BASE" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
     <title>客户管理 - 创建用户</title>
 </head>
 <body>
 <h1>创建客户界面</h1>
-<form id="customer_form" enctype="multipart/form-data">
+<form id="customer_form" action="/chapter3/customer_create" method="post" enctype="multipart/form-data">
 <table>
 <tr>
 	<td>客户名称：</td>
@@ -40,8 +41,8 @@
 </form>
 <script src="${BASE}/js/jquery-3.3.1.min.js"></script>
 <script src="${BASE}/js/jquery.form.js"></script>
-<script>
-	$.ajax({
+<%--<script>
+	$.(function(){
 		$('#customer_form').ajaxForm({
 			type:'post',
 			url:'${BASE}/customer_create',
@@ -53,7 +54,7 @@
 		});
 		
 	});
-</script>
+</script>--%>
 
 </body>
 </html>

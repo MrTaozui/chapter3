@@ -60,7 +60,7 @@ public class CustomerService {
     public boolean createCustomer(Map<String,Object> filedMap, FileParam fileParam){
         boolean result=DatabaseHelper.insertEntity(Customer.class,filedMap);
         if(result){
-            UploadHelper.uploadFile("/tmp/upload/",fileParam);
+            UploadHelper.uploadFile("/tmp/upload/",fileParam);//当前盘符下 的位置 由于项目在D盘下 所以位置为D:/tmp/upload/
         }
         return result;
     }

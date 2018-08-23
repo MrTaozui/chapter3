@@ -2,9 +2,7 @@ package org.smart4j.framework.helper;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framework.util.CollectionUtil;
@@ -17,11 +15,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 
 /**
@@ -134,6 +128,54 @@ public final class DatabaseHelper {
         }
         return result;
     }
+
+    /**
+     * 只返回一个结果
+     */
+    public static String  query(String sql,Object...params){
+        Connection conn=getConnection();
+        String result=null;
+        try {
+         result=  QUERY_RUNNER.query(conn,sql,new ScalarHandler<String>(),params);
+        } catch (SQLException e) {
+            LOGGER.error("query failure ",e);
+            throw  new RuntimeException(e);
+        }
+        return result;
+    }
+    /**
+     * 结果集返回一个List中
+     */
+    public static List<Object[]> queryList(String sql,Object...params){
+        Connection conn=getConnection();
+         List<Object[]> list;
+        try {
+            //每一行是一个数组
+            list=QUERY_RUNNER.query(conn,sql,new ArrayListHandler(),params);
+        } catch (SQLException e) {
+            LOGGER.error("query list failure",e);
+            throw new RuntimeException(e);
+        }
+        return  list;
+    }
+
+    /**
+     *返回单列结果集Set
+     */
+    public static <T> Set<T> querySet(String sql,Object...params){
+        Set<T> result=new HashSet<T>();
+        try {
+            List<Object[]> resultList= queryList(sql,params);
+            for (Object[] objArr:resultList) {
+                result.add((T) objArr[0]);
+            }
+        } catch (Exception e) {
+           LOGGER.error("query set failure",e);
+           throw new RuntimeException(e);
+        }
+        return  result;
+    }
+
     /**
      * 执行更新语句 包括update insert delete  根据sql操作关键字来判断
      * return The number of rows updated

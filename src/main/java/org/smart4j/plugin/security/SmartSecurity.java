@@ -23,6 +23,6 @@ public interface SmartSecurity {
 	/**
 	 * 根据角色名获取权限名集合
 	 */
-	Set<String> getPermission(String roleName);
+	Set<String> getPermissionSet(String roleName);
 
 }

@@ -1,7 +1,9 @@
 package org.smart4j.framework.helper;
 
 import org.smart4j.framework.ConfigConstant;
+import org.smart4j.framework.util.CastUtil;
 import org.smart4j.framework.util.PropsUtil;
+import org.smart4j.plugin.security.SecurityConstant;
 
 import java.util.Properties;
 
@@ -10,6 +12,15 @@ import java.util.Properties;
  * @author tjj .
  */
 public final class ConfigHelper {
+    private static final Properties SHIRO_CONFIG_PROPS= PropsUtil.loadProps(SecurityConstant.CONFIG_FILE);
+
+    public static String getString(String key){
+        return PropsUtil.getString(SHIRO_CONFIG_PROPS, key);
+    }
+
+    public static boolean getBoolean(String key){
+        return CastUtil.castBoolean(PropsUtil.getString(CONFIG_PROPS, key));
+    }
     private static final Properties CONFIG_PROPS= PropsUtil.loadProps(ConfigConstant.CONFIG_FILE);
 
     /**

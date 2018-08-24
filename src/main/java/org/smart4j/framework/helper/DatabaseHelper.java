@@ -67,6 +67,12 @@ public final class DatabaseHelper {
         }
         return conn;
     }
+    /**
+     * 获取数据源
+     */
+    public static BasicDataSource getDataSource(){
+        return DATA_SOURCE;
+    }
    /* //关闭数据库连接     使用了连接池 可以省略这一步
      
     public static  void closeConnection(){

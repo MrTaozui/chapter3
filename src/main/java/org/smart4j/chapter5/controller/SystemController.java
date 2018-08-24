@@ -6,7 +6,8 @@ import org.smart4j.framework.annotation.Action;
 import org.smart4j.framework.annotation.Controller;
 import org.smart4j.framework.bean.Param;
 import org.smart4j.framework.bean.View;
-import org.smart4j.plugin.security.SecurityHelper;
+import org.smart4j.framework.helper.SecurityHelper;
+
 import org.smart4j.plugin.security.exception.AuthcException;
 
 /**

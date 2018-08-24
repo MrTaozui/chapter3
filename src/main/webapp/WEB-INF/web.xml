@@ -7,7 +7,7 @@
          version="3.0">
 
     <!--通过EnvironmentLoaderListener这个监听器来初始化SecurityManager，
-    并通过ShiroFilter来完成认证与授权-->
+     并通过ShiroFilter来完成认证与授权-->
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>
@@ -17,6 +17,6 @@
     </filter>
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/*</url-pattern>  <!-- 拦截所有的请求 -->
     </filter-mapping>
 </web-app>

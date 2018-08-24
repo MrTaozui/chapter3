@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Client {
 	public static void main(String[] args) {
-		ApplicationContext context=new ClassPathXmlApplicationContext("spring.xml");
+		ApplicationContext context=new ClassPathXmlApplicationContext("spring.xml");//demo包下面的 也是classpath 就近读取spring.xml
 		GreetingImpl greetingImpl=(GreetingImpl) context.getBean("greetingProxy");
 		greetingImpl.sayHello("jack");
 		Apology apology=(Apology)greetingImpl;//没有实现这个接口  引入增强了Alology 这个接口

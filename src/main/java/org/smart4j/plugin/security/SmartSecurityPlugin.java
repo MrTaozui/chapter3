@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import java.util.Set;
 
 public class SmartSecurityPlugin implements ServletContainerInitializer{
+	static{
+		System.out.println("监听器初始化");
+	}
 	//通过ServletContext 注册Listener与Filter
 	public void onStartup(Set<Class<?>> handlesTypes, ServletContext servletContext) throws ServletException {
 		//设置初始化参数

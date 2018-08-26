@@ -32,7 +32,7 @@ public class AppSecurity implements SmartSecurity{
 
     @Override
     public Set<String> getPermissionSet(String roleName) {
-        String sql="select p.permission_name from role r,role_permission rp, permission p where r.id=rp.role_id and p.id=rp.permission_id and role_name= ?\n";
+        String sql="select p.permission_name from role r,role_permission rp, permission p where r.id=rp.role_id and p.id=rp.permission_id and role_name= ?";
         return DatabaseHelper.querySet(sql,roleName);
     }
 }

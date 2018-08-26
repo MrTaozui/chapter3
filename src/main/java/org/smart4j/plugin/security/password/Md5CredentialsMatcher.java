@@ -18,4 +18,5 @@ public class Md5CredentialsMatcher implements CredentialsMatcher{
         String encrypted=String.valueOf(info.getCredentials());
         return CodeUtil.md5(submitted).equals(encrypted);
     }
+    
 }

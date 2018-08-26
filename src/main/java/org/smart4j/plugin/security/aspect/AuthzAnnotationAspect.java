@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
  * 授权注解切面
  * @author tjj .
  */
-@Aspect(Controller.class)
+//@Aspect(Controller.class)
 public class AuthzAnnotationAspect extends AspectProxy{
     /**
      *定义一个基于授权功能的注解类数组

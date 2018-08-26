@@ -16,7 +16,7 @@ public interface ConfigConstant {
     String JDBC_USERNAME="smart.framework.jdbc.username";
     String JDBC_PASSWORD="smart.framework.jdbc.password";
 
-    String APP_BASE_PACKAGE="org.smart4j.chapter3";
+    String APP_BASE_PACKAGE="org";
     String APP_JSP_PATH="/WEB-INF/view/";
     String APP_ASSET_PATH="/asset/";
 
